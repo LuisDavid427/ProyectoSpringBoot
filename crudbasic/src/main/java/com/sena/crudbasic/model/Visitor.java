@@ -24,4 +24,37 @@ public class Visitor {
     @ManyToOne
     @JoinColumn(name = "id_type")
     private VisitorType visitorType;
+
+    public Visitor() {
+    }
+
+    public Visitor(int idVisitor, Person person, VisitorType visitorType) {
+        this.idVisitor = idVisitor;
+        this.person = person;
+        this.visitorType = visitorType;
+    }
+
+    public int getIdVisitor() {
+        return idVisitor;
+    }
+
+    public void setIdVisitor(int idVisitor) {
+        this.idVisitor = idVisitor;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public VisitorType getVisitorType() {
+        return visitorType;
+    }
+
+    public void setVisitorType(VisitorType visitorType) {
+        this.visitorType = visitorType;
+    }
 }

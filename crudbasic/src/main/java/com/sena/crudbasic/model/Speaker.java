@@ -19,4 +19,28 @@ public class Speaker {
     @OneToOne
     @JoinColumn(name = "id_person")
     private Person person;
+
+    public Speaker(int idSpeaker, Person person) {
+        this.idSpeaker = idSpeaker;
+        this.person = person;
+    }
+
+    public Speaker() {
+    }
+
+    public int getIdSpeaker() {
+        return idSpeaker;
+    }
+
+    public void setIdSpeaker(int idSpeaker) {
+        this.idSpeaker = idSpeaker;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
 }

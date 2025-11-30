@@ -24,4 +24,45 @@ public class Fair {
 
     @OneToMany(mappedBy = "fair")
     private List<Pavilion> pavilions;
+
+
+    public Fair() {
+    }   
+    public Fair(int idFair, String name, String description, List<Pavilion> pavilions ) {
+        this.idFair = idFair;
+        this.name = name;
+        this.description = description;
+        this.pavilions = pavilions;
+    }
+    public int getIdFair() {
+        return idFair;
+    }
+
+    public void setIdFair(int idFair) {
+        this.idFair = idFair;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<Pavilion> getPavilions() {
+        return pavilions;
+    }
+
+    public void setPavilions(List<Pavilion> pavilions) {
+        this.pavilions = pavilions;
+    }
 }

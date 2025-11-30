@@ -18,8 +18,8 @@ public class Product {
     @Column(name = "id_product")
     private int idProduct;
 
-    @Column(name = "product_name", length = 60)
-    private String productName;
+    @Column(name = "name", length = 60)
+    private String name;
 
     @ManyToOne
     @JoinColumn(name = "id_stand")
@@ -27,4 +27,46 @@ public class Product {
     
     @OneToMany(mappedBy = "product")
     private List<Responsible> responsibles;
+
+    public Product() {
+    }
+
+    public Product(int idProduct, String name, Stand stand, List<Responsible> responsibles) {
+        this.idProduct = idProduct;
+        this.name = name;
+        this.stand = stand;
+        this.responsibles = responsibles;
+    }
+
+    public int getIdProduct() {
+        return idProduct;
+    }
+
+    public void setIdProduct(int idProduct) {
+        this.idProduct = idProduct;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Stand getStand() {
+        return stand;
+    }
+
+    public void setStand(Stand stand) {
+        this.stand = stand;
+    }
+
+    public List<Responsible> getResponsibles() {
+        return responsibles;
+    }
+
+    public void setResponsibles(List<Responsible> responsibles) {
+        this.responsibles = responsibles;
+    }
 }

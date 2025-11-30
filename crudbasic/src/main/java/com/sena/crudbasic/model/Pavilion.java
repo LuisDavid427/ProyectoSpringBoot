@@ -31,4 +31,55 @@ public class Pavilion {
 
     @OneToMany(mappedBy = "pavilion")
     private List<Stand> stands;
+
+    public Pavilion(int idPavilion, String name, Theme theme, Fair fair, List<Stand> stands) {
+        this.idPavilion = idPavilion;
+        this.name = name;
+        this.theme = theme;
+        this.fair = fair;
+        this.stands = stands;
+    }
+
+    public Pavilion() {
+    }
+
+    public int getIdPavilion() {
+        return idPavilion;
+    }
+
+    public void setIdPavilion(int idPavilion) {
+        this.idPavilion = idPavilion;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Theme getTheme() {
+        return theme;
+    }
+
+    public void setTheme(Theme theme) {
+        this.theme = theme;
+    }
+
+    public Fair getFair() {
+        return fair;
+    }
+
+    public void setFair(Fair fair) {
+        this.fair = fair;
+    }
+
+    public List<Stand> getStands() {
+        return stands;
+    }
+
+    public void setStands(List<Stand> stands) {
+        this.stands = stands;
+    }
 }

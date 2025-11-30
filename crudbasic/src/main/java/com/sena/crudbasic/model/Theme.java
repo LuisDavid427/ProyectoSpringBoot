@@ -21,4 +21,37 @@ public class Theme {
 
     @OneToMany(mappedBy = "theme")
     private List<Pavilion> pavilions;
+
+    public Theme() {
+    }
+
+    public Theme(int idTheme, String themeName, List<Pavilion> pavilions) {
+        this.idTheme = idTheme;
+        this.themeName = themeName;
+        this.pavilions = pavilions;
+    }
+
+    public int getIdTheme() {
+        return idTheme;
+    }
+
+    public void setIdTheme(int idTheme) {
+        this.idTheme = idTheme;
+    }
+
+    public String getThemeName() {
+        return themeName;
+    }
+
+    public void setThemeName(String themeName) {
+        this.themeName = themeName;
+    }
+
+    public List<Pavilion> getPavilions() {
+        return pavilions;
+    }
+
+    public void setPavilions(List<Pavilion> pavilions) {
+        this.pavilions = pavilions;
+    }
 }

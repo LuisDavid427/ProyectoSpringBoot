@@ -29,4 +29,64 @@ public class Person {
 
     @OneToOne(mappedBy = "person")
     private Visitor visitor;
+
+    public Person() {
+    }
+
+    public Person(int idPerson, String name, String dni, String phone, Speaker speaker, Visitor visitor) {
+        this.idPerson = idPerson;
+        this.name = name;
+        this.dni = dni;
+        this.phone = phone;
+        this.speaker = speaker;
+        this.visitor = visitor;
+    }
+
+    public int getIdPerson() {
+        return idPerson;
+    }
+
+    public void setIdPerson(int idPerson) {
+        this.idPerson = idPerson;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Speaker getSpeaker() {
+        return speaker;
+    }
+
+    public void setSpeaker(Speaker speaker) {
+        this.speaker = speaker;
+    }
+
+    public Visitor getVisitor() {
+        return visitor;
+    }
+
+    public void setVisitor(Visitor visitor) {
+        this.visitor = visitor;
+    }
 }

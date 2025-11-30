@@ -23,4 +23,37 @@ public class Responsible {
     @ManyToOne
     @JoinColumn(name = "id_person")
     private Person person;
+
+    public Responsible() {
+    }
+
+    public Responsible(int idResponsible, Product product, Person person) {
+        this.idResponsible = idResponsible;
+        this.product = product;
+        this.person = person;
+    }
+
+    public int getIdResponsible() {
+        return idResponsible;
+    }
+
+    public void setIdResponsible(int idResponsible) {
+        this.idResponsible = idResponsible;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
 }
