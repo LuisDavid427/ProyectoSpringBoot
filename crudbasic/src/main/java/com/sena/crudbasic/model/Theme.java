@@ -8,6 +8,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+
 @Entity(name = "theme")
 public class Theme {
 
@@ -16,42 +28,11 @@ public class Theme {
     @Column(name = "id_theme")
     private int idTheme;
 
-    @Column(name = "theme_name", length = 20)
-    private String themeName;
+    @Column(name = "name", length = 20)
+    private String name;
 
     @OneToMany(mappedBy = "theme")
     private List<Pavilion> pavilions;
 
-    public Theme() {
-    }
 
-    public Theme(int idTheme, String themeName, List<Pavilion> pavilions) {
-        this.idTheme = idTheme;
-        this.themeName = themeName;
-        this.pavilions = pavilions;
-    }
-
-    public int getIdTheme() {
-        return idTheme;
-    }
-
-    public void setIdTheme(int idTheme) {
-        this.idTheme = idTheme;
-    }
-
-    public String getThemeName() {
-        return themeName;
-    }
-
-    public void setThemeName(String themeName) {
-        this.themeName = themeName;
-    }
-
-    public List<Pavilion> getPavilions() {
-        return pavilions;
-    }
-
-    public void setPavilions(List<Pavilion> pavilions) {
-        this.pavilions = pavilions;
-    }
 }

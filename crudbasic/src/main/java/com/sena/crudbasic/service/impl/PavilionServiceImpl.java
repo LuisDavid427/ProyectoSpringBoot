@@ -4,100 +4,77 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors; // Importación para usar stream().collect(Collectors.toList())
 
-import com.sena.crudbasic.dto.PavilionDto;
+// Solo importamos los DTOs de Request y Response
+import com.sena.crudbasic.dto.request.PavilionRequestDto; 
+import com.sena.crudbasic.dto.response.PavilionResponseDto; 
+
 import com.sena.crudbasic.model.Pavilion;
-import com.sena.crudbasic.model.Fair;
-import com.sena.crudbasic.model.Theme;
 import com.sena.crudbasic.repository.PavilionRepository;
-import com.sena.crudbasic.repository.FairRepository; // Asumimos esta dependencia
-import com.sena.crudbasic.repository.ThemeRepository; // Asumimos esta dependencia
 import com.sena.crudbasic.service.PavilionService;
 
 @Service
-public class PavilionServiceImpl
-implements PavilionService {
+public class PavilionServiceImpl implements PavilionService {
 	
 	@Autowired
-	private PavilionRepository pavilionRepo;
-    
-    // Necesitamos los repositorios de las entidades relacionadas
-    @Autowired
-    private FairRepository fairRepo; 
-    
-    @Autowired
-    private ThemeRepository themeRepo;
+	private PavilionRepository repo;
 
-	// Conversor DTO -> Model
-	public Pavilion dtoToModel(PavilionDto pavilionDto) {
+	// Conversor Request DTO -> Model (Simplificado)
+	public Pavilion dtoToModel(PavilionRequestDto pavilionDto) {
 		Pavilion pavilion = new Pavilion();
-        pavilion.setIdPavilion(pavilionDto.getIdPavilion());
-        pavilion.setName(pavilionDto.getName());
-        
-        // 1. Convertir el idFair a objeto Fair
-        Fair fair = fairRepo.findById(pavilionDto.getIdFair()).orElse(null);
-        pavilion.setFair(fair);
-        
-        // 2. Convertir el idTheme a objeto Theme
-        Theme theme = themeRepo.findById(pavilionDto.getIdTheme()).orElse(null);
-        pavilion.setTheme(theme);
-        
+		pavilion.setIdPavilion(pavilionDto.getIdPavilion());
+		pavilion.setName(pavilionDto.getName());
+		
+
+		
 		return pavilion;
 	}
-    
-    // Conversor Model -> DTO
-	public PavilionDto modelToDto(Pavilion pavilion) {
-        int idFair = (pavilion.getFair() != null) ? pavilion.getFair().getIdFair() : 0;
-        int idTheme = (pavilion.getTheme() != null) ? pavilion.getTheme().getIdTheme() : 0;
-        
-		return new PavilionDto(
+	
+	// Conversor Model -> Response DTO (Simplificado)
+	public PavilionResponseDto modelToDto(Pavilion pavilion) {
+		return new PavilionResponseDto(
 				pavilion.getIdPavilion(),
 				pavilion.getName(),
-                idTheme,
-                idFair
+				pavilion.getTheme() != null ? pavilion.getTheme().getIdTheme() : 0,
+				pavilion.getFair() != null ? pavilion.getFair().getIdFair() : 0,
+				pavilion.getStands()
 		);
 	}
 
 
 	@Override
-	public List<Pavilion> findAll() {
-		return this.pavilionRepo.findAll();
+	public List<PavilionResponseDto> findAll() { // Retorna DTO List
+		return this.repo.findAll().stream()
+			.map(this::modelToDto)
+			.collect(Collectors.toList());
 	}
 
 	@Override
-	public Pavilion findById(int id) {
-		return pavilionRepo.findById(id).orElse(null);
+	public PavilionResponseDto findById(Integer id) { // Usa Integer ID y retorna DTO
+		return repo.findById(id)
+			.map(this::modelToDto)
+			.orElse(null);
 	}
 
 	@Override
-	public List<Pavilion> filterByName(String name) {
-		return pavilionRepo.findByNameContainingIgnoreCase(name);
-	}
-    
-    @Override
-	public List<Pavilion> filterByFairId(int idFair) {
-		return pavilionRepo.findByFair_IdFair(idFair);
+	public List<PavilionResponseDto> filterByName(String name) { // Retorna DTO List
+		return repo.findByName(name).stream()
+			.map(this::modelToDto)
+			.collect(Collectors.toList());
 	}
 
+	
 	@Override
-	public String save(PavilionDto pavilionDto) {
+	public String save(PavilionRequestDto pavilionDto) { // Recibe Request DTO
 		Pavilion pavilion = dtoToModel(pavilionDto);
-        
-        // Validación de relaciones antes de guardar
-        if (pavilion.getFair() == null) {
-            return "Error: Fair not found with ID " + pavilionDto.getIdFair();
-        }
-        if (pavilion.getTheme() == null) {
-            return "Error: Theme not found with ID " + pavilionDto.getIdTheme();
-        }
-        
-		pavilionRepo.save(pavilion);
+		repo.save(pavilion);
 		return "Saved successfully"; 
 	}
 
 	@Override
-	public String delete(int id) {
-		pavilionRepo.deleteById(id);
+	public String delete(Integer id) { // Usa Integer ID
+		repo.deleteById(id);
 		return "Deleted successfully";
 	}
 }

@@ -4,12 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-import com.sena.crudbasic.dto.ProductDto;
+import com.sena.crudbasic.dto.request.ProductRequestDto;
+import com.sena.crudbasic.dto.response.PersonResponseDto;
+import com.sena.crudbasic.dto.response.ProductResponseDto;
 import com.sena.crudbasic.model.Product;
 import com.sena.crudbasic.model.Stand;
 import com.sena.crudbasic.repository.ProductRepository;
-import com.sena.crudbasic.repository.StandRepository; // Asumimos esta dependencia
+import com.sena.crudbasic.repository.StandRepository; 
 import com.sena.crudbasic.service.ProductService;
 
 @Service
@@ -17,14 +20,14 @@ public class ProductServiceImpl
 implements ProductService {
 	
 	@Autowired
-	private ProductRepository productRepo;
+	private ProductRepository repo;
     
     // Necesitamos el repositorio de la entidad Stand
     @Autowired
     private StandRepository standRepo; 
 
 	// Conversor DTO -> Model
-	public Product dtoToModel(ProductDto productDto) {
+	public Product dtoToModel(ProductRequestDto productDto) {
 		Product product = new Product();
         product.setIdProduct(productDto.getIdProduct());
         product.setName(productDto.getName());
@@ -37,39 +40,46 @@ implements ProductService {
 	}
     
     // Conversor Model -> DTO
-	public ProductDto modelToDto(Product product) {
+	public ProductResponseDto modelToDto(Product product) {
         int idStand = (product.getStand() != null) ? product.getStand().getIdStand() : 0;
         
-		return new ProductDto(
+		return new ProductResponseDto(
 				product.getIdProduct(),
 				product.getName(),
                 idStand
 		);
 	}
 
-
 	@Override
-	public List<Product> findAll() {
-		return this.productRepo.findAll();
+	public List<ProductResponseDto> findAll() { // Retorna DTO List
+		return this.repo.findAll().stream()
+			.map(this::modelToDto)
+			.collect(Collectors.toList());
 	}
 
 	@Override
-	public Product findById(int id) {
-		return productRepo.findById(id).orElse(null);
+	public ProductResponseDto findById(Integer id) { // Usa Integer ID y retorna DTO
+		return repo.findById(id)
+			.map(this::modelToDto)
+			.orElse(null);
 	}
 
 	@Override
-	public List<Product> filterByName(String name) {
-		return productRepo.findByProductNameContainingIgnoreCase(name);
+	public List<ProductResponseDto> filterByName(String name) { // Retorna DTO List
+		return repo.findByName(name).stream()
+			.map(this::modelToDto)
+			.collect(Collectors.toList());
 	}
     
     @Override
-	public List<Product> filterByStandId(int idStand) {
-		return productRepo.findByStand_IdStand(idStand);
+	public List<ProductResponseDto> filterByStandId(int idStand) { // Retorna DTO List
+		return repo.filterByIdStand(idStand).stream()
+			.map(this::modelToDto)
+			.collect(Collectors.toList());
 	}
 
 	@Override
-	public String save(ProductDto productDto) {
+	public String save(ProductRequestDto productDto) {
 		Product product = dtoToModel(productDto);
         
         // Validación de relación antes de guardar
@@ -77,13 +87,13 @@ implements ProductService {
             return "Error: Stand not found with ID " + productDto.getIdStand();
         }
         
-		productRepo.save(product);
+		repo.save(product);
 		return "Saved successfully"; 
 	}
 
 	@Override
-	public String delete(int id) {
-		productRepo.deleteById(id);
+	public String delete(Integer id) {
+		repo.deleteById(id);
 		return "Deleted successfully";
 	}
 }

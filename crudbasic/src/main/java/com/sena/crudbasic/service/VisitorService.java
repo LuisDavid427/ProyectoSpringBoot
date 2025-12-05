@@ -2,15 +2,15 @@ package com.sena.crudbasic.service;
 
 import java.util.List;
 
-import com.sena.crudbasic.dto.VisitorDto;
-import com.sena.crudbasic.model.Visitor;
+import com.sena.crudbasic.dto.request.VisitorRequestDto;
+import com.sena.crudbasic.dto.response.VisitorResponseDto;
 
 public interface VisitorService {
 
-	public List<Visitor> findAll();
-	public Visitor findById(int id);
-    public Visitor findByPersonId(int idPerson);
-    public List<Visitor> filterByTypeId(int idType);
-	public String save(VisitorDto v);
+	public List<VisitorResponseDto> findAll();
+	public VisitorResponseDto findById(int id);
+    public VisitorResponseDto findByPersonId(int idPerson);
+    public List<VisitorResponseDto> filterByTypeId(int idType);
+	public String save(VisitorRequestDto v);
 	public String delete(int id);
 }

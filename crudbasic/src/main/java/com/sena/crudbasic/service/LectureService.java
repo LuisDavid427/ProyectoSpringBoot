@@ -1,15 +1,9 @@
 package com.sena.crudbasic.service;
 
-import java.util.List;
+import com.sena.crudbasic.dto.request.LectureRequestDto;
 
-import com.sena.crudbasic.dto.LectureDto;
-import com.sena.crudbasic.model.Lecture;
+import com.sena.crudbasic.dto.response.LectureResponseDto;
 
-public interface LectureService {
+public interface LectureService extends GenericService <LectureRequestDto, LectureResponseDto, Integer>{
 
-	public List<Lecture> findAll();
-	public Lecture findById(int id);
-	public List<Lecture> filterByName(String name);
-	public String save(LectureDto l);
-	public String delete(int id);
 }

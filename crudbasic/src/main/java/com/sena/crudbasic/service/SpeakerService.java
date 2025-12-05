@@ -2,14 +2,14 @@ package com.sena.crudbasic.service;
 
 import java.util.List;
 
-import com.sena.crudbasic.dto.SpeakerDto;
-import com.sena.crudbasic.model.Speaker;
+import com.sena.crudbasic.dto.request.SpeakerRequestDto;
+import com.sena.crudbasic.dto.response.SpeakerResponseDto;
 
 public interface SpeakerService {
 
-	public List<Speaker> findAll();
-	public Speaker findById(int id);
-    public Speaker findByPersonId(int idPerson);
-	public String save(SpeakerDto s);
+	public List<SpeakerResponseDto> findAll();
+	public SpeakerResponseDto findById(int id);
+    public SpeakerResponseDto findByPersonId(int idPerson);
+	public String save(SpeakerRequestDto s);
 	public String delete(int id);
 }

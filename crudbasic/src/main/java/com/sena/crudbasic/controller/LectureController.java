@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import com.sena.crudbasic.service.LectureService;
-import com.sena.crudbasic.dto.LectureDto;
+import com.sena.crudbasic.dto.request.LectureRequestDto;
+import com.sena.crudbasic.dto.response.LectureResponseDto;
 import com.sena.crudbasic.model.Lecture;
 
 import java.util.List;
@@ -32,14 +33,14 @@ public class LectureController {
     }
     
     @PostMapping("")
-    public ResponseEntity<Object> save(@RequestBody LectureDto l){
+    public ResponseEntity<Object> save(@RequestBody LectureRequestDto l){
         service.save(l);
         return new ResponseEntity<Object>("Saved successfully", HttpStatus.CREATED);
     }
     
     @GetMapping("{id}")
 	public ResponseEntity<Object> findById(@PathVariable int id){
-		Lecture lecture = service.findById(id);
+		LectureResponseDto lecture = service.findById(id);
 		if (lecture == null) {
             return new ResponseEntity<Object>("Lecture not found", HttpStatus.NOT_FOUND);
         }
@@ -49,7 +50,7 @@ public class LectureController {
     
 	@GetMapping("filterbyname/{name}")
 	public ResponseEntity<Object> filterByName(@PathVariable String name){
-		List <Lecture> lectures = service.filterByName(name);
+		List <LectureResponseDto> lectures = service.filterByName(name);
 	    return new ResponseEntity<Object>(lectures, HttpStatus.OK);
 	
 	}

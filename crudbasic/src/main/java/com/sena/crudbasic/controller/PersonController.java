@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import com.sena.crudbasic.service.PersonService;
-import com.sena.crudbasic.dto.PersonDto;
+import com.sena.crudbasic.dto.response.PersonResponseDto;
+import com.sena.crudbasic.dto.request.PersonRequestDto;
 import com.sena.crudbasic.model.Person;
 
 import java.util.List;
@@ -32,14 +33,14 @@ public class PersonController {
     }
     
     @PostMapping("")
-    public ResponseEntity<Object> save(@RequestBody PersonDto p){
+    public ResponseEntity<Object> save(@RequestBody PersonRequestDto p){
         service.save(p);
         return new ResponseEntity<Object>("Saved successfully", HttpStatus.CREATED);
     }
     
     @GetMapping("{id}")
 	public ResponseEntity<Object> findById(@PathVariable int id){
-		Person person = service.findById(id);
+		PersonResponseDto person = service.findById(id);
 		if (person == null) {
             return new ResponseEntity<Object>("Person not found", HttpStatus.NOT_FOUND);
         }
@@ -49,15 +50,15 @@ public class PersonController {
     
 	@GetMapping("filterbyname/{name}")
 	public ResponseEntity<Object> filterByName(@PathVariable String name){
-		List <Person> people = service.filterByName(name);
+		List <PersonResponseDto> people = service.filterByName(name);
 	    return new ResponseEntity<Object>(people, HttpStatus.OK);
 	
 	}
     
     @GetMapping("filterbydni/{dni}")
-	public ResponseEntity<Object> findByDni(@PathVariable String dni){
-		Person person = service.findByDni(dni);
-		if (person == null) {
+	public ResponseEntity<Object> filterByDni(@PathVariable String dni){
+		List<PersonResponseDto> person = service.filterByDni(dni);
+		if (person == null || person.isEmpty()) {
             return new ResponseEntity<Object>("Person not found with DNI " + dni, HttpStatus.NOT_FOUND);
         }
 	    return new ResponseEntity<Object>(person, HttpStatus.OK);

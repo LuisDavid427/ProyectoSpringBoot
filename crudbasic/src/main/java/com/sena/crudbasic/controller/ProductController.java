@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import com.sena.crudbasic.service.ProductService;
-import com.sena.crudbasic.dto.ProductDto;
+import com.sena.crudbasic.dto.request.ProductRequestDto;
+import com.sena.crudbasic.dto.response.ProductResponseDto;
 import com.sena.crudbasic.model.Product;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class ProductController {
     }
     
     @PostMapping("")
-    public ResponseEntity<Object> save(@RequestBody ProductDto p){
+    public ResponseEntity<Object> save(@RequestBody ProductRequestDto p){
         String result = service.save(p);
         
         // Manejo del error de relación que definimos en el Service
@@ -45,7 +46,7 @@ public class ProductController {
     
     @GetMapping("{id}")
 	public ResponseEntity<Object> findById(@PathVariable int id){
-		Product product = service.findById(id);
+		ProductResponseDto product = service.findById(id);
 		if (product == null) {
             return new ResponseEntity<Object>("Product not found", HttpStatus.NOT_FOUND);
         }
@@ -55,14 +56,14 @@ public class ProductController {
     
 	@GetMapping("filterbyname/{name}")
 	public ResponseEntity<Object> filterByName(@PathVariable String name){
-		List <Product> products = service.filterByName(name);
+		List <ProductResponseDto> products = service.filterByName(name);
 	    return new ResponseEntity<Object>(products, HttpStatus.OK);
 	
 	}
     
     @GetMapping("filterbystand/{idStand}")
 	public ResponseEntity<Object> filterByStandId(@PathVariable int idStand){
-		List <Product> products = service.filterByStandId(idStand);
+		List <ProductResponseDto> products = service.filterByStandId(idStand);
 	    return new ResponseEntity<Object>(products, HttpStatus.OK);
 	
 	}

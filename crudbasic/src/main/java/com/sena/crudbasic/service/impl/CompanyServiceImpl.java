@@ -5,63 +5,70 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import com.sena.crudbasic.dto.CompanyDto;
+import java.util.stream.Collectors;
+
+import com.sena.crudbasic.dto.request.CompanyRequestDto;
+import com.sena.crudbasic.dto.response.CompanyResponseDto;
 import com.sena.crudbasic.model.Company;
 import com.sena.crudbasic.repository.CompanyRepository;
 import com.sena.crudbasic.service.CompanyService;
 
 @Service
-public class CompanyServiceImpl
-implements CompanyService{
+public class CompanyServiceImpl implements CompanyService {
 	
 	@Autowired
 	private CompanyRepository repo;
 
-	@Override
-	public List<Company> findAll() {
-		return this.repo.findAll();
-	}
-
-	@Override
-	public Company findById(int id) {
-		return repo.findById(id).orElse(null);
-	}
-
-	@Override
-	public List<Company> filterByCompanyName(String name) {
-		return repo.filterByCompanyName(name);
-	}
-	
-	// Conversor del DTO al Model
-	public Company dtoToModel(CompanyDto companyDto) {
+	public Company dtoToModel(CompanyRequestDto companyDto) {
 		Company company = new Company();
         company.setIdCompany(companyDto.getIdCompany());
-        company.setCompanyName(companyDto.getCompanyName());
+        company.setName(companyDto.getName());
         company.setDescription(companyDto.getDescription());
-        // La colección de stands se deja nula/vacía al guardar
 		return company;
 	}
 	
-	// Conversor del Model al DTO
-	public CompanyDto modelToDto(Company company) {
-		return new CompanyDto(
+	public CompanyResponseDto modelToDto(Company company) {
+		return new CompanyResponseDto(
 			company.getIdCompany(),
-			company.getCompanyName(),
+			company.getName(),
             company.getDescription()
-				);
+			);
 	}
 
+	@Override
+	public List<CompanyResponseDto> findAll() {
+		return this.repo.findAll().stream()
+            .map(this::modelToDto)
+            .collect(Collectors.toList());
+	}
+
+    @Override
+    public CompanyResponseDto findById(Integer id) {
+        return repo.findById(id)
+                .map(this::modelToDto)
+                .orElse(null);
+    }
 	
 	@Override
-	public String save(CompanyDto companyDto) {
-		Company company = dtoToModel(companyDto);
+	public String save(CompanyRequestDto companyRequestDto) {
+		Company company = dtoToModel(companyRequestDto);
 		repo.save(company);
-		return "Saved successfully"; // Mensaje en inglés
+		return "Saved successfully"; 
 	}
 
+
 	@Override
-	public String delete(int id) {
+	public String delete(Integer id) { 
 		repo.deleteById(id);
-		return "Deleted successfully"; // Mensaje en inglés
+		return "Deleted successfully"; 
+	}
+    
+
+
+	@Override
+	public List<CompanyResponseDto> filterByName(String name) {
+		return repo.filterByName(name).stream()
+            .map(this::modelToDto)
+            .collect(Collectors.toList());
 	}
 }

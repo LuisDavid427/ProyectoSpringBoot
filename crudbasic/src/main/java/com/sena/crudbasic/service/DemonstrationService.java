@@ -1,15 +1,9 @@
 package com.sena.crudbasic.service;
 
-import java.util.List;
+import com.sena.crudbasic.dto.request.DemonstrationRequestDto;
 
-import com.sena.crudbasic.dto.DemonstrationDto;
-import com.sena.crudbasic.model.Demonstration;
+import com.sena.crudbasic.dto.response.DemonstrationResponseDto;
 
-public interface DemonstrationService {
+public interface DemonstrationService extends GenericService <DemonstrationRequestDto, DemonstrationResponseDto, Integer> {
 
-	public List<Demonstration> findAll();
-	public Demonstration findById(int id);
-	public List<Demonstration> filterByName(String name);
-	public String save(DemonstrationDto d);
-	public String delete(int id);
 }

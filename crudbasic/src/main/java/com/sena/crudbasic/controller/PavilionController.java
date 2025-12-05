@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import com.sena.crudbasic.service.PavilionService;
-import com.sena.crudbasic.dto.PavilionDto;
+import com.sena.crudbasic.dto.request.PavilionRequestDto;
+import com.sena.crudbasic.dto.response.PavilionResponseDto;
 import com.sena.crudbasic.model.Pavilion;
 
 import java.util.List;
@@ -32,10 +33,8 @@ public class PavilionController {
     }
     
     @PostMapping("")
-    public ResponseEntity<Object> save(@RequestBody PavilionDto p){
+    public ResponseEntity<Object> save(@RequestBody PavilionRequestDto p){
         String result = service.save(p);
-        
-        // Manejo del error de relación que definimos en el Service
         if (result.startsWith("Error")) {
             return new ResponseEntity<Object>(result, HttpStatus.BAD_REQUEST);
         }
@@ -45,7 +44,7 @@ public class PavilionController {
     
     @GetMapping("{id}")
 	public ResponseEntity<Object> findById(@PathVariable int id){
-		Pavilion pavilion = service.findById(id);
+		PavilionResponseDto pavilion = service.findById(id);
 		if (pavilion == null) {
             return new ResponseEntity<Object>("Pavilion not found", HttpStatus.NOT_FOUND);
         }
@@ -55,17 +54,11 @@ public class PavilionController {
     
 	@GetMapping("filterbyname/{name}")
 	public ResponseEntity<Object> filterByName(@PathVariable String name){
-		List <Pavilion> pavilions = service.filterByName(name);
+		List <PavilionResponseDto> pavilions = service.filterByName(name);
 	    return new ResponseEntity<Object>(pavilions, HttpStatus.OK);
 	
 	}
     
-    @GetMapping("filterbyfair/{idFair}")
-	public ResponseEntity<Object> filterByFairId(@PathVariable int idFair){
-		List <Pavilion> pavilions = service.filterByFairId(idFair);
-	    return new ResponseEntity<Object>(pavilions, HttpStatus.OK);
-	
-	}
     
 	@DeleteMapping("{id}")
 	public ResponseEntity<Object> delete(@PathVariable int id){

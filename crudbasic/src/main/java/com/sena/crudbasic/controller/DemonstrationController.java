@@ -11,11 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import com.sena.crudbasic.service.DemonstrationService;
-import com.sena.crudbasic.dto.DemonstrationDto;
+import com.sena.crudbasic.dto.request.DemonstrationRequestDto;
 import com.sena.crudbasic.model.Demonstration;
 
 import java.util.List;
+
+import com.sena.crudbasic.dto.response.DemonstrationResponseDto;
 
 @RestController
 @RequestMapping("/api/demonstrations")
@@ -32,14 +35,14 @@ public class DemonstrationController {
     }
     
     @PostMapping("")
-    public ResponseEntity<Object> save(@RequestBody DemonstrationDto d){
+    public ResponseEntity<Object> save(@RequestBody DemonstrationRequestDto d){
         service.save(d);
         return new ResponseEntity<Object>("Saved successfully", HttpStatus.CREATED);
     }
     
     @GetMapping("{id}")
 	public ResponseEntity<Object> findById(@PathVariable int id){
-		Demonstration demonstration = service.findById(id);
+		DemonstrationResponseDto demonstration = service.findById(id);
 		if (demonstration == null) {
             return new ResponseEntity<Object>("Demonstration not found", HttpStatus.NOT_FOUND);
         }
@@ -49,7 +52,7 @@ public class DemonstrationController {
     
 	@GetMapping("filterbyname/{name}")
 	public ResponseEntity<Object> filterByName(@PathVariable String name){
-		List <Demonstration> demonstrations = service.filterByName(name);
+		List <DemonstrationResponseDto> demonstrations = service.filterByName(name);
 	    return new ResponseEntity<Object>(demonstrations, HttpStatus.OK);
 	
 	}

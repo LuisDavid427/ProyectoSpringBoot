@@ -8,6 +8,18 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Column;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+
 @Entity(name = "speaker")
 public class Speaker {
 
@@ -20,27 +32,5 @@ public class Speaker {
     @JoinColumn(name = "id_person")
     private Person person;
 
-    public Speaker(int idSpeaker, Person person) {
-        this.idSpeaker = idSpeaker;
-        this.person = person;
-    }
 
-    public Speaker() {
-    }
-
-    public int getIdSpeaker() {
-        return idSpeaker;
-    }
-
-    public void setIdSpeaker(int idSpeaker) {
-        this.idSpeaker = idSpeaker;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
 }

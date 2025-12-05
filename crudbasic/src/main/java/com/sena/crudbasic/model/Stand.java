@@ -10,6 +10,18 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+
 @Entity(name = "stand")
 public class Stand {
 
@@ -18,8 +30,8 @@ public class Stand {
     @Column(name = "id_stand")
     private int idStand;
 
-    @Column(name = "stand_name", length = 80)
-    private String standName;
+    @Column(name = "name", length = 80)
+    private String name;
 
     @ManyToOne
     @JoinColumn(name = "id_pavilion")
@@ -32,54 +44,5 @@ public class Stand {
     @OneToMany(mappedBy = "stand")
     private List<Product> products;
 
-    public Stand() {
-    }
 
-    public Stand(int idStand, String standName, Pavilion pavilion, Company company, List<Product> products) {
-        this.idStand = idStand;
-        this.standName = standName;
-        this.pavilion = pavilion;
-        this.company = company;
-        this.products = products;
-    }
-
-    public int getIdStand() {
-        return idStand;
-    }
-
-    public void setIdStand(int idStand) {
-        this.idStand = idStand;
-    }
-
-    public String getStandName() {
-        return standName;
-    }
-
-    public void setStandName(String standName) {
-        this.standName = standName;
-    }
-
-    public Pavilion getPavilion() {
-        return pavilion;
-    }
-
-    public void setPavilion(Pavilion pavilion) {
-        this.pavilion = pavilion;
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
 }

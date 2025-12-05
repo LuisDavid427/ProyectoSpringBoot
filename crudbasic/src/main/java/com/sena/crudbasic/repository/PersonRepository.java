@@ -24,7 +24,7 @@ extends JpaRepository<Person, Integer>
 			+ "p.name like %?1%"
 			)
 	
-	public List<Person> findByNameContainingIgnoreCase(String name);
+	public List<Person> findByName(String name);
     
 	@Query(""
 			+ "SELECT "
@@ -34,5 +34,5 @@ extends JpaRepository<Person, Integer>
 			+ "WHERE "
 			+ "p.dni like %?1%"
 			)
-    public Optional<Person> findByDni(String dni);
+    public List<Person> findByDni(String dni);
 }

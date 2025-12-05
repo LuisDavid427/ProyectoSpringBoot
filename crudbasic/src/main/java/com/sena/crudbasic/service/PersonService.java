@@ -1,15 +1,15 @@
 package com.sena.crudbasic.service;
 
+
 import java.util.List;
-import com.sena.crudbasic.dto.PersonDto;
+
+import com.sena.crudbasic.dto.request.PersonRequestDto;
+
+import com.sena.crudbasic.dto.response.PersonResponseDto;
 import com.sena.crudbasic.model.Person;
 
-public interface PersonService {
+public interface PersonService extends GenericService <PersonRequestDto, PersonResponseDto, Integer>{
 
-	public List<Person> findAll();
-	public Person findById(int id);
-	public List<Person> filterByName(String name);
-    public Person findByDni(String dni);
-	public String save(PersonDto p);
-	public String delete(int id);
+    List<PersonResponseDto> filterByDni(String dni);
+
 }

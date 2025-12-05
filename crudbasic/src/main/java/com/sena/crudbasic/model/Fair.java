@@ -8,6 +8,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+
 @Entity(name = "fair")
 public class Fair {
 
@@ -26,43 +38,4 @@ public class Fair {
     private List<Pavilion> pavilions;
 
 
-    public Fair() {
-    }   
-    public Fair(int idFair, String name, String description, List<Pavilion> pavilions ) {
-        this.idFair = idFair;
-        this.name = name;
-        this.description = description;
-        this.pavilions = pavilions;
-    }
-    public int getIdFair() {
-        return idFair;
-    }
-
-    public void setIdFair(int idFair) {
-        this.idFair = idFair;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public List<Pavilion> getPavilions() {
-        return pavilions;
-    }
-
-    public void setPavilions(List<Pavilion> pavilions) {
-        this.pavilions = pavilions;
-    }
 }

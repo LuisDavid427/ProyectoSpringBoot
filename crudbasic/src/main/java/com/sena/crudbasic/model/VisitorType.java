@@ -8,6 +8,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+
 @Entity(name = "visitor_type")
 public class VisitorType {
 
@@ -16,42 +28,10 @@ public class VisitorType {
     @Column(name = "id_type")
     private int idType;
 
-    @Column(name = "type_name", length = 20)
-    private String typeName;
+    @Column(name = "name", length = 20)
+    private String name;
 
     @OneToMany(mappedBy = "visitorType")
     private List<Visitor> visitors;
 
-    public VisitorType() {
-    }
-
-    public VisitorType(int idType, String typeName, List<Visitor> visitors) {
-        this.idType = idType;
-        this.typeName = typeName;
-        this.visitors = visitors;
-    }
-
-    public int getIdType() {
-        return idType;
-    }
-
-    public void setIdType(int idType) {
-        this.idType = idType;
-    }
-
-    public String getTypeName() {
-        return typeName;
-    }
-
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
-    }
-
-    public List<Visitor> getVisitors() {
-        return visitors;
-    }
-
-    public void setVisitors(List<Visitor> visitors) {
-        this.visitors = visitors;
-    }
 }

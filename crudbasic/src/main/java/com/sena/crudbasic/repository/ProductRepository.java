@@ -21,7 +21,7 @@ extends JpaRepository<Product, Integer>
 			+ "WHERE "
 			+ "p.name like %?1%"
 			)
-	public List<Product> findByProductNameContainingIgnoreCase(String name);
+	public List<Product> findByName(String name);
     
     /*
 	 * Consulta Derivada: Busca Productos por el ID del Stand al que pertenecen.
@@ -35,5 +35,6 @@ extends JpaRepository<Product, Integer>
 			+ "WHERE "
 			+ "p.stand = ?1"
 			)
-	public List<Product> findByStand_IdStand(int idStand);
+	public List<Product> filterByIdStand(int idStand);
+	
 }

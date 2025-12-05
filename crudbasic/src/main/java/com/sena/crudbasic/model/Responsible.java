@@ -8,6 +8,18 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Column;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+
 @Entity(name = "responsible")
 public class Responsible {
 
@@ -24,36 +36,5 @@ public class Responsible {
     @JoinColumn(name = "id_person")
     private Person person;
 
-    public Responsible() {
-    }
 
-    public Responsible(int idResponsible, Product product, Person person) {
-        this.idResponsible = idResponsible;
-        this.product = product;
-        this.person = person;
-    }
-
-    public int getIdResponsible() {
-        return idResponsible;
-    }
-
-    public void setIdResponsible(int idResponsible) {
-        this.idResponsible = idResponsible;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
 }

@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import com.sena.crudbasic.service.CompanyService;
-import com.sena.crudbasic.dto.CompanyDto;
-import com.sena.crudbasic.model.Company;
+import com.sena.crudbasic.dto.request.CompanyRequestDto;
+
 
 import java.util.List;
+
+import com.sena.crudbasic.dto.response.CompanyResponseDto;
 
 @RestController
 @RequestMapping("/api/companies") // Agregamos un mapping base para organizar
@@ -33,14 +36,14 @@ public class CompanyController {
     }
     
     @PostMapping("")
-    public ResponseEntity<Object> save(@RequestBody CompanyDto c){
+    public ResponseEntity<Object> save(@RequestBody CompanyRequestDto c){
         service.save(c);
         return new ResponseEntity<Object>("Saved successfully",HttpStatus.CREATED); // Usamos 201 Created
     }
     
     @GetMapping("{id}")
 	public ResponseEntity<Object> findById(@PathVariable int id){
-		Company company = service.findById(id);
+		CompanyResponseDto company = service.findById(id);
 		if (company == null) {
             return new ResponseEntity<Object>("Company not found", HttpStatus.NOT_FOUND);
         }
@@ -49,8 +52,8 @@ public class CompanyController {
 	}
     
 	@GetMapping("filterbyname/{name}")
-	public ResponseEntity<Object> filterByCompanyName(@PathVariable String name){
-		List <Company> companies = service.filterByCompanyName(name);
+	public ResponseEntity<Object> filterByName(@PathVariable String name){
+		List <CompanyResponseDto> companies = service.filterByName(name);
 	    return new ResponseEntity<Object>(companies, HttpStatus.OK);
 	
 	}
